@@ -36,4 +36,116 @@ class ALUControl extends Module {
   io.operation := "b11111".U // Invalid
 
   // Your code goes here
+  when(io.funct7 === "b0000000".U) {  // funct7 = 0000000
+
+    when (io.funct3 === "b000".U) { // funct3 = 000
+      when (io.int_length === false.B) {    
+        io.operation := "b00000".U      // add
+      }
+      when (io.int_length === true.B) {    
+        io.operation := "b10000".U      // addw (todo)
+      }
+    }
+    when (io.funct3 === "b001".U) {   // funct3 = 001
+      when (io.int_length === false.B) {    
+        io.operation := "b01010".U      // sll
+      }
+      when (io.int_length === true.B) {    
+        io.operation := "b11010".U      // sllw (todo)
+      }
+    }
+    when (io.funct3 === "b101".U) {   // funct3 = 101
+      when (io.int_length === false.B) {    
+        io.operation := "b01011".U      // srl
+      }
+      when (io.int_length === true.B) {    
+        io.operation := "b11011".U      // srlw (todo)
+      }
+    }
+    when (io.funct3 === "b010".U && io.int_length === false.B) {
+      io.operation := "b01100".U   // slt
+    }
+    when (io.funct3 === "b011".U && io.int_length === false.B) {
+      io.operation := "b01111".U   // sltu
+    }
+    when (io.funct3 === "b100".U && io.int_length === false.B) {
+      io.operation := "b01000".U   // xor
+    }
+    when (io.funct3 === "b110".U && io.int_length === false.B) {
+      io.operation := "b00111".U   // or
+    }
+    when (io.funct3 === "b111".U && io.int_length === false.B) {
+      io.operation := "b00101".U   // and
+    }
+  }
+  when(io.funct7 === "b0100000".U) {  // funct7 = 0100000
+    when (io.funct3 === "b000".U) {   // funct3 = 000
+      when (io.int_length === false.B) {    
+        io.operation := "b00001".U      // sub
+      }
+      when (io.int_length === true.B) { 
+        io.operation := "b10001".U      // subw (todo)
+      }
+    }
+    when (io.funct3 === "b101".U) {   // funct3 = 101
+      when (io.int_length === false.B) {    
+        io.operation := "b01001".U      // sra
+      }
+      when (io.int_length === true.B) {    
+        io.operation := "b11001".U      // sraw (todo)
+      }
+    }
+  }
+  when(io.funct7 === "b0000001".U) {  // funct7 = 0000001
+    when (io.funct3 === "b000".U) {   // funct3 = 000
+      when (io.int_length === false.B) {    
+        io.operation := "b00010".U      // mul
+      }
+      when (io.int_length === true.B) {    
+        io.operation := "b10010".U      // mulw (todo)
+      }
+    }
+    when (io.funct3 === "b001".U && io.int_length === false.B) {    
+      io.operation := "b10101".U      // mulh
+    }
+    when (io.funct3 === "b010".U && io.int_length === false.B) {    
+      io.operation := "b11000".U      // mulhsu
+    }
+    when (io.funct3 === "b011".U && io.int_length === false.B) {    
+      io.operation := "b10111".U      // mulhu
+    }
+    when (io.funct3 === "b100".U) {   // funct3 = 100
+      when (io.int_length === false.B) {    
+        io.operation := "b00011".U      // div
+      }
+      when (io.int_length === true.B) {    
+        io.operation := "b10011".U      // divw (todo)
+      }
+    }
+    when (io.funct3 === "b101".U) {   // funct3 = 101
+      when (io.int_length === false.B) {    
+        io.operation := "b01101".U      // divu
+      }
+      when (io.int_length === true.B) {    
+        io.operation := "b11101".U      // divuw (todo)
+      }
+    }
+    when (io.funct3 === "b110".U) {   // funct3 = 110
+      when (io.int_length === false.B) {    
+        io.operation := "b00100".U      // rem
+      }
+      when (io.int_length === true.B) {    
+        io.operation := "b10100".U      // remw (todo)
+      }
+    }
+    when (io.funct3 === "b111".U) {   // funct3 = 111
+      when (io.int_length === false.B) {    
+        io.operation := "b01110".U      // remu
+      }
+      when (io.int_length === true.B) {    
+        io.operation := "b11110".U      // remuw (todo)
+      }
+    }
+
+  }
 }
