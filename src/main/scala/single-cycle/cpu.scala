@@ -45,7 +45,33 @@ class SingleCycleCPU(implicit val conf: CPUConfig) extends BaseCPU {
   }
 
   // Your code goes here
+  // aluControl
+  aluControl.io.aluop := control.io.aluop
+  aluControl.io.arth_type := control.io.arth_type
+  aluControl.io.int_length := control.io.int_length
+  aluControl.io.funct3 := instruction(14, 12)
+  aluControl.io.funct7 := instruction(31, 25)
 
+  // registers
+  registers.io.readreg1 := instruction(19, 15)
+  registers.io.readreg2 := instruction(24, 20)
+  registers.io.writereg := instruction(11, 7)
+  registers.io.wen := true.B
+  when (registers.io.writereg === 0.U || control.io.writeback_src === 0.U) {
+    registers.io.wen := false.B
+  }
+  // todo: if (rd == 0, then dont write back) (wire wen to false.B)
+  registers.io.writedata := alu.io.result
+
+  // control
+  control.io.opcode := instruction(6, 0)
+
+  // alu
+  alu.io.operation := aluControl.io.operation
+  alu.io.operand1 := registers.io.readdata1
+  alu.io.operand2 := registers.io.readdata2
+
+  pc := pc + 4.U
 }
 
 /*
